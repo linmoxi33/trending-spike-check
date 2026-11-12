@@ -124,6 +124,16 @@ python3 -m unittest discover -s tests -v
 
 把「日榜数字」与「周榜数字」当成同一个量的两个独立测量，**只在两个窗口都覆盖时**才给比值，否则显式 abstain 并给出 abstain 原因（single-day / no weekly row）。用 5 天真快照量化出一个可复核的事实：2026-11-12 的 10 个日榜项目里只有 1 个同时出现在周榜，所以跨窗口比值对 90% 条目不可定义——这是「先证明指标不可用，再决定用哪个基线」的顺序，台账里没有同类先例。
 
+## 与同类项目的差异
+
+`gh search repos "github trending"` 命中若干成熟项目：`vitalets/github-trending-repos`（3042★，按语言把榜单
+发成 GitHub issue 供订阅）、`bonfy/github-trending`（1267★，每日抓取入库）、`huchenme/github-trending-api`（839★，
+提供榜单 API）。它们的共同点是**采集/分发**榜单；本项目的输入就是采集结果，只做**跨窗口对账**：
+
+1. 它们回答“今天谁上榜”，本项目回答“这个上榜数字是不是一天爆发”，并给出比值与基线来源。
+2. 本项目在无法判定时**显式 abstain**，不把缺失的周榜数据当成 0 或 1。
+3. 零依赖、离线、可复现：同一组快照永远得到同一份报告（有回归测试逐字段比对 `examples/out/report.json`）。
+
 ## License
 
 MIT. See `LICENSE`.
