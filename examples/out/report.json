@@ -1,0 +1,102 @@
+{
+  "schema_version": 1,
+  "snapshots": [
+    "2026-11-10",
+    "2026-11-11"
+  ],
+  "latest": "2026-11-11",
+  "tool_count": 5,
+  "counts": {
+    "SPIKE": 1,
+    "CONSISTENT": 1,
+    "UNDERWEIGHT": 1,
+    "ABSTAIN": 2
+  },
+  "rows": [
+    {
+      "repo": "acme/spike",
+      "daily_stars": 700,
+      "weekly_stars": 2100,
+      "daily_share_ratio": 2.3333,
+      "self_baseline_ratio": null,
+      "basis": "weekly",
+      "verdict": "SPIKE",
+      "days_on_daily": 2,
+      "snapshots": 2,
+      "first_seen": "2026-11-10",
+      "new_in_latest": false,
+      "on_daily_today": true,
+      "last_seen": "2026-11-11",
+      "language": "Python",
+      "rank_today": 1
+    },
+    {
+      "repo": "acme/steady",
+      "daily_stars": 300,
+      "weekly_stars": 2100,
+      "daily_share_ratio": 1.0,
+      "self_baseline_ratio": null,
+      "basis": "weekly",
+      "verdict": "CONSISTENT",
+      "days_on_daily": 2,
+      "snapshots": 2,
+      "first_seen": "2026-11-10",
+      "new_in_latest": false,
+      "on_daily_today": true,
+      "last_seen": "2026-11-11",
+      "language": "Python",
+      "rank_today": 2
+    },
+    {
+      "repo": "acme/fade",
+      "daily_stars": 400,
+      "weekly_stars": 9000,
+      "daily_share_ratio": 0.3111,
+      "self_baseline_ratio": null,
+      "basis": "weekly",
+      "verdict": "UNDERWEIGHT",
+      "days_on_daily": 2,
+      "snapshots": 2,
+      "first_seen": "2026-11-10",
+      "new_in_latest": false,
+      "on_daily_today": true,
+      "last_seen": "2026-11-11",
+      "language": "Python",
+      "rank_today": 3
+    },
+    {
+      "repo": "acme/onehit",
+      "daily_stars": 50,
+      "weekly_stars": null,
+      "daily_share_ratio": null,
+      "self_baseline_ratio": null,
+      "basis": null,
+      "verdict": "ABSTAIN",
+      "days_on_daily": 1,
+      "snapshots": 2,
+      "first_seen": "2026-11-10",
+      "new_in_latest": false,
+      "on_daily_today": false,
+      "last_seen": "2026-11-10",
+      "language": "Python",
+      "rank_today": 4
+    },
+    {
+      "repo": "acme/other",
+      "daily_stars": 60,
+      "weekly_stars": null,
+      "daily_share_ratio": null,
+      "self_baseline_ratio": null,
+      "basis": null,
+      "verdict": "ABSTAIN",
+      "days_on_daily": 1,
+      "snapshots": 2,
+      "first_seen": "2026-11-11",
+      "new_in_latest": true,
+      "on_daily_today": true,
+      "last_seen": "2026-11-11",
+      "language": "Python",
+      "rank_today": 4
+    }
+  ]
+}

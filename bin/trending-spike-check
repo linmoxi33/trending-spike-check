@@ -1,0 +1,77 @@
+#!/usr/bin/env python3
+"""CLI for trending-spike-check."""
+
+import argparse
+import json
+import os
+import sys
+
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+from spikecheck import ABSTAIN, SPIKE, InputError, analyse, load_snapshot  # noqa: E402
+
+EXIT_OK, EXIT_FINDINGS, EXIT_USAGE = 0, 1, 2
+
+
+def _read(path):
+    try:
+        with open(path, "r", encoding="utf-8") as fh:
+            return json.load(fh)
+    except OSError as exc:
+        raise InputError("cannot read %s: %s" % (path, exc.strerror or exc))
+    except json.JSONDecodeError as exc:
+        raise InputError("%s is not valid JSON: %s" % (path, exc))
+
+
+def _human(report):
+    lines = ["snapshots: %d (%s .. %s)" % (len(report["snapshots"]), report["snapshots"][0], report["snapshots"][-1]),
+             "latest: %s | repos on daily: %d" % (report["latest"], report["tool_count"]),
+             "verdicts: %d SPIKE, %d CONSISTENT, %d UNDERWEIGHT, %d ABSTAIN"
+             % (report["counts"][SPIKE], report["counts"]["CONSISTENT"],
+                report["counts"]["UNDERWEIGHT"], report["counts"][ABSTAIN]),
+             ""]
+    lines.append("%-44s %8s %8s %7s %-12s %-5s %s" % ("repo", "daily", "weekly", "ratio", "verdict", "days", "basis"))
+    for row in report["rows"]:
+        ratio = "-" if row["daily_share_ratio"] is None else "%.2f" % row["daily_share_ratio"]
+        weekly = "-" if row["weekly_stars"] is None else str(row["weekly_stars"])
+        basis = row["basis"] or "-"
+        lines.append("%-44s %8d %8s %7s %-12s %d/%-3d %s"
+                     % (row["repo"][:44], row["daily_stars"], weekly, ratio,
+                        row["verdict"], row["days_on_daily"], row["snapshots"], basis))
+    return "\n".join(lines)
+
+
+def main(argv=None):
+    parser = argparse.ArgumentParser(
+        prog="trending-spike-check",
+        description="Classify daily trending entries as one-day spikes or sustained trends.",
+    )
+    parser.add_argument("snapshots", nargs="+", help="one or more github-trending-dataset snapshot JSON files")
+    parser.add_argument("--json", action="store_true", dest="as_json")
+    parser.add_argument("--fail-on-spike", action="store_true",
+                        help="exit 1 when at least one SPIKE is found")
+    args = parser.parse_args(argv)
+
+    try:
+        snaps = [load_snapshot(_read(p)) for p in args.snapshots]
+        report = analyse(snaps)
+    except InputError as exc:
+        if args.as_json:
+            json.dump({"error": str(exc)}, sys.stdout, indent=2)
+            sys.stdout.write("\n")
+        else:
+            sys.stderr.write("trending-spike-check: error: %s\n" % exc)
+        return EXIT_USAGE
+
+    if args.as_json:
+        json.dump(report, sys.stdout, indent=2)
+        sys.stdout.write("\n")
+    else:
+        sys.stdout.write(_human(report) + "\n")
+    if args.fail_on_spike and report["counts"][SPIKE] > 0:
+        return EXIT_FINDINGS
+    return EXIT_OK
+
+
+if __name__ == "__main__":
+    sys.exit(main())

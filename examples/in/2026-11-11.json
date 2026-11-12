@@ -1,0 +1,51 @@
+{
+  "date": "2026-11-11",
+  "lists": {
+    "daily": [
+      {
+        "repo": "acme/spike",
+        "stars_period": 700,
+        "language": "Python",
+        "description": "acme/spike"
+      },
+      {
+        "repo": "acme/steady",
+        "stars_period": 300,
+        "language": "Python",
+        "description": "acme/steady"
+      },
+      {
+        "repo": "acme/fade",
+        "stars_period": 400,
+        "language": "Python",
+        "description": "acme/fade"
+      },
+      {
+        "repo": "acme/other",
+        "stars_period": 60,
+        "language": "Python",
+        "description": "acme/other"
+      }
+    ],
+    "weekly": [
+      {
+        "repo": "acme/steady",
+        "stars_period": 2100,
+        "language": "Python",
+        "description": "acme/steady"
+      },
+      {
+        "repo": "acme/fade",
+        "stars_period": 9000,
+        "language": "Python",
+        "description": "acme/fade"
+      },
+      {
+        "repo": "acme/spike",
+        "stars_period": 2100,
+        "language": "Python",
+        "description": "acme/spike"
+      }
+    ]
+  }
+}
