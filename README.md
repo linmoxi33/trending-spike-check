@@ -35,7 +35,7 @@ Every row also reports `days_on_daily` / `snapshots` (how many of the supplied s
 Python 3.9+, no third-party packages.
 
 ```bash
-git clone git@github-linmoxi33:linmoxi33/trending-spike-check.git
+git clone https://github.com/linmoxi33/trending-spike-check.git
 cd trending-spike-check
 python3 --version   # 3.9+
 ```
